@@ -1,271 +1,300 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Career & Job Recommendation Platform - Page 3</title>
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Chart.js, Chart.js DataLabels Plugin & PapaParse -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Career & Job Recommendation Platform - Page 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+<style>
+:root{--ink:#0f1b2d;--ink2:#334155;--mute:#64748b;--paper:#eef2f6;--card:#fff;--line:#dbe3ec;--base:#3b6ea8;--peak:#f97316;--teal:#0f766e;--accent:#1d4ed8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Prompt','Segoe UI',Tahoma,sans-serif;line-height:1.6}
+header{background:radial-gradient(1200px 400px at 85% -20%,#1e5fa8 0,transparent 60%),linear-gradient(135deg,#0b1626,#13304f);color:#fff;padding:34px 24px 64px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end}
+header h1{margin:0;font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:-.01em}
+header p{margin:6px 0 0;color:#b6c8dc;font-size:14px;max-width:620px}
+header .tag{font-size:12px;color:#8fb0d1;border:1px solid #2d4d70;padding:4px 12px;border-radius:99px}
+nav{display:flex;gap:8px;flex-wrap:wrap;padding:0 24px;max-width:1200px;margin:-28px auto 0;position:relative}
+nav a{background:#fff;color:var(--ink2);text-decoration:none;font-size:13px;font-weight:500;padding:10px 16px;border-radius:10px;border:1px solid var(--line);transition:.2s;box-shadow:0 4px 12px rgba(15,27,45,.08)}
+nav a:hover{transform:translateY(-2px);color:var(--accent)}
+nav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+nav a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 24px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px}
+.card h2{font-size:17px;margin:0 0 4px;font-weight:600}
+.lead{font-size:13px;color:var(--mute);margin:0 0 14px}
+.info-box{background:#eff6ff;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 10px 10px 0;font-size:13px;color:#1e3a8a;line-height:1.8}
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c,var(--base))}
+.kpi .t{font-size:13px;color:var(--mute)}
+.kpi .v{font-size:38px;font-weight:700;line-height:1.2;color:var(--ink)}
+.kpi .s{font-size:12px;color:var(--mute)}
+/* legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-bottom:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+/* svg */
+.svg-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:8px}
+#svgBarChart{width:100%;min-width:640px;height:auto;display:block}
+.svg-bar{fill:var(--base);transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:grow .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*90ms);transition:filter .2s}
+.svg-bar.peak{fill:var(--peak)}
+.svg-bar:hover{filter:brightness(1.15)}
+.svg-lbl{opacity:0;animation:fade .5s forwards;animation-delay:calc(var(--i)*90ms + 600ms)}
+@keyframes grow{to{transform:scaleY(1)}}
+@keyframes fade{to{opacity:1}}
+.insight{margin-top:12px;font-size:13px;color:var(--ink2);background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:10px 14px}
+.insight b{color:#c2410c}
+/* chart grid */
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.chart-box{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;background:#fff}
+.chart-box h3{font-size:15px;margin:0 0 2px;font-weight:600}
+.chart-box .desc{font-size:12px;color:var(--mute);margin:0 0 10px}
+.chart-box .cv{height:300px;position:relative}
+.chart-box .insight{font-size:12px}
+/* search */
+.filter-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:4px}
+.field-input{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;background:#fff}
+.field-input:focus{border-color:var(--accent)}
+.ck-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ck-head label{font-size:12px;font-weight:600;color:var(--ink2)}
+.checkbox-container{border:1px solid var(--line);border-radius:10px;padding:10px;background:#f8fafc;max-height:150px;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.checkbox-item{display:flex;align-items:center;gap:6px;font-size:12px;background:#fff;padding:6px 8px;border:1px solid var(--line);border-radius:8px;cursor:pointer;user-select:none;transition:.15s}
+.checkbox-item:hover{border-color:var(--accent)}
+.checkbox-item:has(input:checked){background:#dbeafe;border-color:var(--accent);color:#1e3a8a;font-weight:500}
+.match{display:grid;grid-template-columns:1.8fr 1.2fr;gap:16px;margin-top:16px}
+.job{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:12px 16px;margin-bottom:10px;animation:fade .4s forwards;opacity:0;transition:transform .2s,box-shadow .2s}
+.job:hover{transform:translateX(3px);box-shadow:0 6px 16px rgba(15,27,45,.08)}
+.job-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.badge{background:#dcfce7;color:#166534;font-size:11px;padding:2px 10px;border-radius:99px;font-weight:600;white-space:nowrap}
+.bar-m{height:5px;border-radius:9px;background:#e2e8f0;margin-top:8px;overflow:hidden}
+.bar-m span{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);width:0;transition:width .8s}
+.gap-box{background:#eff6ff;border:1px solid #bfdbfe;padding:14px;border-radius:12px;font-size:13px;color:#1e3a8a}
+.gap-box h3{font-size:14px;margin:0 0 8px;color:#1e40af}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:13px;color:var(--ink2)}
+.how div{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px}
+.how b{display:block;color:var(--ink);margin-bottom:2px}
+.log{background:#0b1626;color:#7dd3fc;border-radius:10px;padding:12px;font-size:12px;font-family:Consolas,monospace;line-height:1.6;overflow-x:auto}
+footer{text-align:center;padding:24px;color:var(--mute);font-size:12px}
+@media(max-width:850px){.match,.chart-grid,.how{grid-template-columns:1fr}}
+@media(max-width:600px){.kpi-row,.filter-row{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
 
-    <style>
-        body { background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        .dashboard-container { max-width: 1200px; margin: 0 auto; padding: 16px; }
-
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-top: 16px;
-        }
-        @media (max-width: 768px) { .chart-grid { grid-template-columns: 1fr; } }
-
-        .chart-box {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            max-height: 380px;
-        }
-        .chart-box h3 {
-            font-size: 14px;
-            color: #1e293b;
-            margin-top: 0;
-            margin-bottom: 12px;
-        }
-
-        /* Section เพิ่มใหม่: ประโยชน์ที่ได้รับ (Expected Benefits) */
-        .benefits-card {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
-        }
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 14px;
-        }
-        @media (max-width: 768px) { .benefits-grid { grid-template-columns: 1fr; } }
-
-        .benefit-item {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            padding: 14px;
-            backdrop-filter: blur(4px);
-        }
-        .benefit-item h4 {
-            margin: 0 0 8px 0;
-            font-size: 14px;
-            color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .benefit-item p {
-            margin: 0;
-            font-size: 12px;
-            color: #e2e8f0;
-            line-height: 1.5;
-        }
-
-        .guide-box {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 16px;
-            border: 1px solid #cbd5e1;
-        }
-    </style>
+.filter-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.filter-card label{font-size:13px;font-weight:600;color:var(--ink2)}
+.filter-card select{max-width:100%}
+.kpi .v{font-size:32px}
+.chart-box .cv{height:320px}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.road>div{background:#f8fafc;border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:14px;font-size:13px;color:var(--ink2)}
+.road b{display:block;color:var(--ink);margin-bottom:4px;font-size:14px}
+.road .pct{display:inline-block;margin-top:8px;font-size:12px;background:#fff7ed;border:1px solid #fed7aa;color:#c2410c;border-radius:99px;padding:2px 10px;font-weight:600}
+.benefits{background:linear-gradient(135deg,#0b1626,#13304f);color:#fff;border-radius:14px;padding:22px;margin-bottom:20px}
+.benefits h2{margin:0 0 4px;font-size:17px}
+.benefits .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.benefits .it{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:14px}
+.benefits h4{margin:0 0 6px;font-size:14px;color:#7dd3fc}
+.benefits p{margin:0;font-size:12.5px;color:#e2e8f0}
+.warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:8px 12px;font-size:12px;margin-top:12px}
+.chart-box .cv{height:320px}
+@media(max-width:850px){.road,.benefits .grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+<header role="banner">
+  <div>
+    <h1>🎯 แผนที่ทักษะ & คำแนะนำพัฒนาสายงาน (Skill Roadmap)</h1>
+    <p>วิเคราะห์ความต้องการทักษะ ปัจจัยการได้งาน และประโยชน์สำหรับผู้มีส่วนเกี่ยวข้อง</p>
+  </div>
+  <span class="tag">DSPROJECT_HANOI</span>
+</header>
 
-    <header>
-        <div class="title-group">
-            <h1>🎯 แผนที่ทักษะ & คำแนะนำพัฒนาสายงาน (Skill Roadmap)</h1>
-            <p>วิเคราะห์ความต้องการทักษะ ปัจจัยการได้งาน และประโยชน์สำหรับผู้มีส่วนเกี่ยวข้อง</p>
-        </div>
-        <div style="text-align: right; font-size: 12px; opacity: 0.9;">
-            DSPROJECT_HANOI
-        </div>
-    </header>
+<nav role="navigation" aria-label="เมนูหลัก">
+  <a href="index.html">1. ภาพรวมตลาดงาน & ค้นหางานตาม Skill</a>
+  <a href="page2.html">2. ทักษะ vs เงินเดือนตอบแทน</a>
+  <a href="page3.html" class="active" aria-current="page">3. วิเคราะห์ Skill Gap & คำแนะนำอาชีพ</a>
+</nav>
 
-    <nav>
-        <a href="index.html">1. ภาพรวมตลาดงาน & ค้นหางานตาม Skill</a>
-        <a href="page2.html">2. ทักษะ vs เงินเดือนตอบแทน</a>
-        <a href="page3.html" class="active">3. วิเคราะห์ Skill Gap & คำแนะนำอาชีพ</a>
-    </nav>
+<main class="wrap" role="main">
 
-    <div class="dashboard-container">
-
-        <div class="chart-grid">
-            <!-- กราฟ 1: Top 10 Core Essential Skills -->
-            <div class="chart-box">
-                <h3>🧠 Top 10 ทักษะพื้นฐานหลักที่ทุกสายงานต้องการ</h3>
-                <div style="height: 290px;"><canvas id="chartCoreSkills"></canvas></div>
-            </div>
-
-            <!-- กราฟ 2: Top 10 Cloud & Infrastructure Skills -->
-            <div class="chart-box">
-                <h3>☁️ Top 10 ทักษะด้าน Cloud & DevOps ยอดฮิต</h3>
-                <div style="height: 290px;"><canvas id="chartCloudSkills"></canvas></div>
-            </div>
-
-            <!-- กราฟ 3: Top 10 Data & AI Skills -->
-            <div class="chart-box">
-                <h3>📊 Top 10 ทักษะด้าน Data & Analytics</h3>
-                <div style="height: 290px;"><canvas id="chartDataSkills"></canvas></div>
-            </div>
-
-            <!-- กราฟ 4 (เพิ่มใหม่): ปัจจัยที่สัมพันธ์กับการได้งาน -->
-            <div class="chart-box">
-                <h3>🎯 ปัจจัยหลักที่สัมพันธ์กับการได้รับการจ้างงาน (Employability Factors)</h3>
-                <div style="height: 290px;"><canvas id="chartEmployability"></canvas></div>
-            </div>
-        </div>
-
-        <!-- คำแนะนำพัฒนาตนเอง -->
-        <div class="guide-box">
-            <h3 style="margin-top: 0; color: #1e3a8a;">🛠️ ข้อแนะนำทักษะที่ควรพัฒนา (Skill Roadmap)</h3>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; font-size: 13px; color: #334155; line-height: 1.5;">
-                <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid #2563eb;">
-                    <b>1. สำหรับผู้เริ่มต้น (Entry-Level)</b><br>
-                    เน้นทักษะ SQL, Python และ Git/Linux ซึ่งปรากฏในกว่า 60% ของประกาศรับสมัครงานทุกตำแหน่ง
-                </div>
-                <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid #0d9488;">
-                    <b>2. การอัปเกรดเป็น Mid-Level</b><br>
-                    ต่อยอดทักษะ Cloud (AWS/Azure) และ Docker/Kubernetes เพื่อขยายขอบเขตงานและปรับฐานเงินเดือน
-                </div>
-                <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid #d97706;">
-                    <b>3. เส้นทางสู่นักวิเคราะห์/AI</b><br>
-                    เสริมด้วย Spark, Power BI, Tableau และ Machine Learning Frameworks สำหรับสายงาน Data & AI
-                </div>
-            </div>
-        </div>
-
-        <!-- ส่วนที่เพิ่มใหม่: Expected Benefit / ประโยชน์ที่ได้รับ (ตรงตามภาพสไลด์) -->
-        <div class="benefits-card">
-            <h3 style="margin: 0; font-size: 16px; color: #f8fafc;">✨ Expected Benefit / ประโยชน์ที่ได้รับ</h3>
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <h4>🎓 สำหรับนักศึกษา</h4>
-                    <p>→ รู้ว่าควรพัฒนาทักษะอะไร และเตรียมความพร้อมเข้าสู่ตลาดแรงงานได้อย่างตรงจุด</p>
-                </div>
-                <div class="benefit-item">
-                    <h4>🏛️ สำหรับมหาวิทยาลัย</h4>
-                    <p>→ ใช้ข้อมูลเชิงสถิตินี้ในการปรับปรุงหลักสูตร และเตรียมความพร้อมให้นักศึกษาตรงตามความต้องการจริง</p>
-                </div>
-                <div class="benefit-item">
-                    <h4>🏢 สำหรับบริษัท</h4>
-                    <p>→ ทำความเข้าใจโครงสร้างทักษะและคุณสมบัติของบัณฑิตจบใหม่ ช่วยคัดเลือกบุคลากรได้มีประสิทธิภาพ</p>
-                </div>
-            </div>
-        </div>
-
+  <section class="card" style="margin-top:20px" aria-labelledby="how-t">
+    <h2 id="how-t">📖 วิธีอ่านหน้านี้</h2>
+    <p class="lead">หน้านี้จัดกลุ่มทักษะตามหมวด เพื่อให้เห็นว่าควรเรียนอะไรก่อนและอะไรต่อยอด</p>
+    <div class="how">
+      <div><b>🟧 สีส้ม = ค่าสูงสุด</b>ทักษะหรือปัจจัยที่มากที่สุดในแต่ละกราฟจะเป็นสีส้ม ที่เหลือเป็นสีน้ำเงิน</div>
+      <div><b>📐 แกน X และ Y</b>กราฟทักษะแสดงจำนวนประกาศงานที่ต้องการทักษะนั้น มีชื่อแกนกำกับทุกกราฟ</div>
+      <div><b>🗂️ แยกตามหมวด</b>ทักษะพื้นฐาน, Cloud & Infrastructure และ Data & Database นับจากข้อมูลจริงทั้งหมด</div>
     </div>
+  </section>
 
-    <footer>
-        <p>DSPROJECT_HANOI • IT Career Recommendation Platform</p>
-    </footer>
+  <section class="card" aria-labelledby="clean-title">
+    <h2 id="clean-title">🧹 สรุปผลการทำความสะอาดข้อมูลสำหรับ Roadmap</h2>
+    <p class="lead">ตรวจข้อมูลที่ไม่สมบูรณ์และเงินเดือนผิดปกติก่อนนับทักษะ</p>
+    <div id="cleanSummary" class="info-box">กำลังประมวลผลการทำความสะอาดข้อมูล...</div>
+  </section>
 
-    <script>
-        Chart.register(ChartDataLabels);
-        Chart.defaults.color = '#475569';
-        Chart.defaults.borderColor = '#e2e8f0';
+  <section class="card" aria-labelledby="charts-title">
+    <h2 id="charts-title">📊 กราฟวิเคราะห์ทักษะและปัจจัยการได้งาน</h2>
+    <p class="lead">เลื่อนเมาส์ที่แท่งเพื่อดูจำนวนประกาศและสัดส่วนที่แน่นอน</p>
+    <div class="legend"><span><i style="background:var(--peak)"></i>ค่าสูงสุดในกราฟ</span><span><i style="background:var(--base)"></i>ค่าอื่น ๆ</span></div>
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>🧠 Top 10 ทักษะพื้นฐานหลักที่ทุกสายงานต้องการ</h3>
+        <p class="desc">ทักษะที่พบในประกาศงานมากที่สุดโดยรวม เป็นจุดเริ่มต้นที่ควรมีก่อนเลือกสายเฉพาะ</p>
+        <div class="cv"><canvas id="chartCoreSkills"></canvas></div><div class="insight" id="in1"></div>
+      </div>
+      <div class="chart-box">
+        <h3>☁️ Top 10 ทักษะ Cloud & Infrastructure</h3>
+        <p class="desc">ทักษะด้านระบบและโครงสร้างพื้นฐาน เหมาะกับการต่อยอดไปสาย DevOps และ Cloud</p>
+        <div class="cv"><canvas id="chartCloudSkills"></canvas></div><div class="insight" id="in2"></div>
+      </div>
+      <div class="chart-box">
+        <h3>📊 Top 10 ทักษะ Data & Database</h3>
+        <p class="desc">ทักษะด้านข้อมูลและฐานข้อมูล สำคัญสำหรับสายวิเคราะห์ข้อมูลและ Data Engineer</p>
+        <div class="cv"><canvas id="chartDataSkills"></canvas></div><div class="insight" id="in3"></div>
+      </div>
+      <div class="chart-box">
+        <h3>🎯 ปัจจัยที่สัมพันธ์กับการได้รับการจ้างงาน</h3>
+        <p class="desc">ความสำคัญของปัจจัยต่าง ๆ ต่อการได้งาน (%) ยิ่งสูงยิ่งสำคัญ</p>
+        <div class="cv"><canvas id="chartEmployability"></canvas></div><div class="insight" id="in4"></div>
+        <div class="warn">⚠️ กราฟนี้เป็นค่าประมาณเพื่อประกอบการอธิบาย ไม่ได้คำนวณจากไฟล์ CSV เพราะชุดข้อมูลไม่มีข้อมูลใบรับรอง/พอร์ตโฟลิโอ ควรระบุแหล่งอ้างอิงจริงก่อนนำเสนอ</div>
+      </div>
+    </div>
+  </section>
 
-        const loadCSV = (file) => {
-            Papa.parse(file, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(res) { initPage3(res.data); },
-                error: function() {
-                    if(file.endsWith('.csv.csv')) loadCSV('thailand_it_jobs_realistic_500.csv');
-                }
-            });
-        };
-        loadCSV('thailand_it_jobs_realistic_500.csv.csv');
+  <section class="card" aria-labelledby="roadmap-title">
+    <h2 id="roadmap-title">🛠️ ข้อแนะนำทักษะที่ควรพัฒนา (Skill Roadmap)</h2>
+    <p class="lead">เส้นทางพัฒนาเป็นขั้น พร้อมสัดส่วนประกาศงานที่ต้องการทักษะกลุ่มนั้น (คำนวณจากข้อมูลจริง)</p>
+    <div class="road">
+      <div style="--c:#3b6ea8"><b>1. สำหรับผู้เริ่มต้น (Entry-Level)</b>เน้นทักษะ Python, SQL และ PostgreSQL เป็นพื้นฐานที่ใช้ได้กับหลายตำแหน่ง<br><span class="pct" id="pEntry">...</span></div>
+      <div style="--c:#0f766e"><b>2. อัปเกรดเป็น Mid-Level</b>ต่อยอด Cloud (AWS, Azure) และ Linux/Networking เพื่อขยายขอบเขตงานและปรับฐานเงินเดือน<br><span class="pct" id="pMid">...</span></div>
+      <div style="--c:#f97316"><b>3. เส้นทาง Data & Architecture</b>เสริมด้วย REST API, Node.js และเครื่องมือจัดการข้อมูลขั้นสูงสำหรับการเติบโตในสายงานข้อมูล<br><span class="pct" id="pAdv">...</span></div>
+    </div>
+  </section>
 
-        function initPage3(data) {
-            const skillCount = {};
-            data.forEach(r => {
-                if(r.Required_Skill) {
-                    r.Required_Skill.split(/[,;&]+/).forEach(s => {
-                        const clean = s.trim();
-                        if(clean) skillCount[clean] = (skillCount[clean] || 0) + 1;
-                    });
-                }
-            });
+  <section class="benefits" aria-labelledby="benefits-title">
+    <h2 id="benefits-title">✨ Expected Benefit / ประโยชน์ที่ได้รับ</h2>
+    <div class="grid">
+      <div class="it"><h4>🎓 สำหรับนักศึกษา</h4><p>รู้ว่าควรพัฒนาทักษะอะไร และเตรียมความพร้อมเข้าสู่ตลาดแรงงานได้ตรงจุด</p></div>
+      <div class="it"><h4>🏛️ สำหรับมหาวิทยาลัย</h4><p>ใช้ข้อมูลเชิงสถิตินี้ปรับปรุงหลักสูตร ให้บัณฑิตตรงกับความต้องการจริงของตลาด</p></div>
+      <div class="it"><h4>🏢 สำหรับบริษัท</h4><p>เข้าใจโครงสร้างทักษะของบัณฑิตจบใหม่ ช่วยคัดเลือกบุคลากรได้มีประสิทธิภาพ</p></div>
+    </div>
+  </section>
 
-            // 1. Core Skills
-            renderSkillChart('chartCoreSkills', skillCount, ['SQL', 'Python', 'Java', 'Linux', 'Git', 'REST API', 'Excel', 'Docker', 'AWS', 'Networking'], '#2563eb');
+  <section class="card" aria-labelledby="ethics-title">
+    <h2 id="ethics-title">⚖️ จริยธรรมข้อมูล & บันทึกการใช้ AI</h2>
+    <div class="info-box" style="border-left-color:#10b981;background:#ecfdf5;color:#065f46;margin:10px 0 12px">
+      <strong>Data Ethics Statement:</strong> การจัดหมวดทักษะและคำแนะนำอาชีพอิงสถิติความถี่จากชุดข้อมูล ยกเว้นกราฟปัจจัยการได้งานซึ่งเป็นค่าประมาณเพื่ออธิบายประกอบ และมุ่งส่งเสริมศักยภาพแรงงานอย่างเท่าเทียม
+    </div>
+    <div class="log">
+      [2026-10-24] AI Prompt: ปรับปรุง page3.html ด้วย HTML5 Semantic, Clean Data และจัดกลุ่มสถิติทักษะตามหมวดจาก CSV<br>
+      [AI Action]: เพิ่ม processCleaning(), จัดอันดับ Top Skills รายหมวด (Core, Cloud, Data), คำนวณสัดส่วนใน Roadmap จากข้อมูลจริง พร้อมแกน คำอธิบาย และอนิเมชัน<br>
+      [Human Verification]: ตรวจการนับทักษะเทียบกับหน้า index.html และตรวจที่มาของปัจจัยการได้รับการจ้างงาน
+    </div>
+  </section>
+</main>
 
-            // 2. Cloud Skills
-            renderSkillChart('chartCloudSkills', skillCount, ['AWS', 'Azure', 'Docker', 'Kubernetes', 'Terraform', 'Linux', 'CI/CD', 'Cloud Security', 'GCP', 'Ansible'], '#0284c7');
+<footer role="contentinfo">DSPROJECT_HANOI • IT Career Recommendation Platform</footer>
 
-            // 3. Data Skills
-            renderSkillChart('chartDataSkills', skillCount, ['SQL', 'Python', 'Power BI', 'Tableau', 'Spark', 'ETL', 'Airflow', 'Statistics', 'Pandas', 'PostgreSQL'], '#0d9488');
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family = "'Prompt','Segoe UI',sans-serif";
+Chart.defaults.color = '#475569';
+Chart.defaults.borderColor = '#e2e8f0';
+const BASE = '#3b6ea8', PEAK = '#f97316';
+let cleanedData = [];
 
-            // 4. (เพิ่มใหม่) Employability Factors (คำนวณสัดส่วนปัจจัยที่มีผลต่อการได้งาน)
-            renderEmployabilityChart();
-        }
+document.addEventListener('DOMContentLoaded', () => loadCSV('thailand_it_jobs_realistic_500.csv.csv'));
+const loadCSV = (file) => {
+  Papa.parse(file, { download: true, header: true, skipEmptyLines: true,
+    complete: res => initPage3(res.data),
+    error: () => { if (file.endsWith('.csv.csv')) loadCSV('thailand_it_jobs_realistic_500.csv'); } });
+};
 
-        function renderSkillChart(canvasId, skillMap, targetSkills, color) {
-            const dataPairs = targetSkills.map(s => [s, skillMap[s] || 0]).sort((a,b) => b[1] - a[1]);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const splitSkills = s => (s || '').split(/[,;&]+/).map(x => x.trim()).filter(Boolean);
+const axisTitle = t => ({ display: true, text: t, font: { weight: '600', size: 12 }, color: '#334155' });
+const wrapLabel = (s, n) => s.length > n ? s.slice(0, n - 1) + '…' : s;
+const note = (id, h) => { document.getElementById(id).innerHTML = h; };
 
-            new Chart(document.getElementById(canvasId), {
-                type: 'bar',
-                data: {
-                    labels: dataPairs.map(x => x[0]),
-                    datasets: [{ data: dataPairs.map(x => x[1]), backgroundColor: color, borderRadius: 4 }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        datalabels: { anchor: 'end', align: 'top', color: '#1e293b', font: { weight: 'bold', size: 10 } }
-                    },
-                    scales: { y: { gracefulMax: 10 } }
-                }
-            });
-        }
+function processCleaning(data) {
+  let missing = 0, outlier = 0; const cleaned = [];
+  data.forEach(r => {
+    const jobTitle = r.Job_Title ? r.Job_Title.trim() : null;
+    const skillStr = r.Required_Skill ? r.Required_Skill.trim() : null;
+    let sal = 0; if (r.Salary) sal = parseFloat(String(r.Salary).replace(/[,"]/g, '').trim()) || 0;
+    if (!jobTitle || !skillStr) { missing++; return; }
+    if (sal > 0 && (sal < 15000 || sal > 300000)) { outlier++; return; }
+    cleaned.push({ ...r, Job_Title: jobTitle, Required_Skill: skillStr, Salary: sal });
+  });
+  document.getElementById('cleanSummary').innerHTML = `
+    <b>ผลการตรวจและทำความสะอาดข้อมูล:</b> จากข้อมูลดิบทั้งหมด ${data.length} รายการ<br>
+    • ตัดข้อมูลไม่สมบูรณ์ (ไม่มีชื่อตำแหน่งหรือทักษะ): <b>${missing}</b> รายการ<br>
+    • กรองเงินเดือนผิดปกติ (นอกช่วง 15,000–300,000 บาท): <b>${outlier}</b> รายการ<br>
+    • ข้อมูลที่พร้อมใช้งาน (Cleaned Dataset): <b>${cleaned.length}</b> รายการ`;
+  return cleaned;
+}
 
-        function renderEmployabilityChart() {
-            new Chart(document.getElementById('chartEmployability'), {
-                type: 'bar',
-                data: {
-                    labels: ['ทักษะเฉพาะทาง (Skill Match)', 'ประสบการณ์ (Experience)', 'ใบรับรอง (Certifications)', 'โปรเจกต์สะสม (Portfolio)', 'ภาษาอังกฤษ (English)'],
-                    datasets: [{
-                        data: [88, 75, 62, 58, 52], // % น้ำหนักความสำคัญจากมุมมองผู้ว่าจ้าง
-                        backgroundColor: '#d97706',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'right',
-                            color: '#1e293b',
-                            font: { weight: 'bold', size: 10 },
-                            formatter: val => val + '%'
-                        }
-                    },
-                    scales: { x: { max: 100 } }
-                }
-            });
-        }
-    </script>
+function skillBar(id, items, { horizontal = false, xTitle, yTitle, unit = 'ประกาศ', suffix = '' }) {
+  const full = items.map(x => x[0]), vals = items.map(x => x[1]), max = Math.max(...vals);
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: full.map(l => wrapLabel(l, horizontal ? 26 : 12)),
+      datasets: [{ data: vals, backgroundColor: vals.map(v => v === max ? PEAK : BASE), borderRadius: 6, maxBarThickness: 40 }] },
+    options: {
+      indexAxis: horizontal ? 'y' : 'x', responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 18, right: horizontal ? 34 : 8 } },
+      animation: { duration: 900, easing: 'easeOutQuart', delay: c => c.type === 'data' && c.mode === 'default' ? c.dataIndex * 90 : 0 },
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { title: c => full[c[0].dataIndex], label: c => ` ${c.raw}${suffix} ${unit}` } },
+        datalabels: { anchor: 'end', align: horizontal ? 'right' : 'top', offset: 2, font: { weight: 'bold', size: 11 },
+          formatter: v => v + suffix, color: c => c.raw === max ? '#c2410c' : '#1e293b' } },
+      scales: {
+        x: { title: axisTitle(xTitle), beginAtZero: true, grid: { display: horizontal },
+          max: horizontal && suffix === '%' ? 100 : undefined, grace: horizontal && suffix !== '%' ? '12%' : 0,
+          ticks: { maxRotation: horizontal ? 0 : 40, minRotation: horizontal ? 0 : 40, font: { size: 10 } } },
+        y: { title: axisTitle(yTitle), beginAtZero: true, grace: horizontal ? 0 : '12%', ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+function initPage3(data) {
+  cleanedData = processCleaning(data);
+  const total = cleanedData.length, count = {};
+  cleanedData.forEach(r => splitSkills(r.Required_Skill).forEach(s => { count[s] = (count[s] || 0) + 1; }));
+  const ranked = Object.entries(count).sort((a, b) => b[1] - a[1]);
+  const pct = n => total ? (n / total * 100).toFixed(1) : '0.0';
+
+  const overall = ranked.slice(0, 10);
+  const byCat = (words) => ranked.filter(([s]) => words.some(w => s.toLowerCase().includes(w.toLowerCase()))).slice(0, 10);
+  const cloud = byCat(['AWS', 'Cloud', 'Azure', 'Linux', 'Network', 'Docker', 'Kubernetes', 'CI/CD', 'Security', 'DevOps']);
+  const dataS = byCat(['Python', 'SQL', 'Data', 'Database', 'Power BI', 'Tableau', 'Spark', 'ETL', 'Analytics']);
+
+  const draw = (id, items, noteId, color, label, xTitle) => {
+    if (!items.length) { note(noteId, `ไม่พบทักษะในหมวด${label}ในชุดข้อมูลนี้`); return; }
+    skillBar(id, items, { xTitle, yTitle: 'จำนวนประกาศที่ต้องการ' });
+    note(noteId, `🔥 <b>${esc(items[0][0])}</b> เป็นที่ต้องการมากที่สุดในหมวด${label} <b>${items[0][1]}</b> ประกาศ (${pct(items[0][1])}% ของทั้งหมด)`);
+  };
+  draw('chartCoreSkills', overall, 'in1', BASE, 'พื้นฐาน', 'ทักษะ (Skill)');
+  draw('chartCloudSkills', cloud, 'in2', BASE, ' Cloud & Infrastructure', 'ทักษะ Cloud & Infra');
+  draw('chartDataSkills', dataS, 'in3', BASE, ' Data & Database', 'ทักษะ Data & Database');
+
+  const emp = [['ทักษะเฉพาะทาง (Skill Match)', 88], ['ประสบการณ์ (Experience)', 75], ['ใบรับรอง (Certifications)', 62], ['โปรเจกต์สะสม (Portfolio)', 58], ['ภาษาอังกฤษ (English)', 52]];
+  skillBar('chartEmployability', emp, { horizontal: true, xTitle: 'ระดับความสำคัญ (%) – ค่าประมาณ', yTitle: 'ปัจจัย', unit: '(ค่าประมาณ)', suffix: '%' });
+  note('in4', `🔥 ปัจจัยที่สำคัญที่สุดคือ <b>${emp[0][0]}</b> (${emp[0][1]}%) แสดงว่าทักษะตรงสายงานสำคัญกว่าปัจจัยอื่น`);
+
+  // Roadmap shares from real data
+  const share = (words) => { const n = cleanedData.filter(r => words.some(w => r.Required_Skill.toLowerCase().includes(w))).length;
+    return `พบใน ${pct(n)}% ของประกาศ (${n} จาก ${total})`; };
+  document.getElementById('pEntry').textContent = share(['python', 'sql']);
+  document.getElementById('pMid').textContent = share(['aws', 'azure', 'cloud', 'linux', 'network']);
+  document.getElementById('pAdv').textContent = share(['rest', 'api', 'node']);
+}
+</script>
 </body>
 </html>
